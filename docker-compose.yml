@@ -21,7 +21,6 @@ services:
       - ./app/drupal/web/themes:/var/web/app/drupal/web/themes
       - ./app/drupal/web/profiles:/var/web/app/drupal/web/profiles
       - ./app/drupal/web/sites:/var/web/app/drupal/web/sites
-#      - ./app/drupal/web/libraries:/var/web/app/drupal/web/libraries
       # drupal web files
       - ./app/drupal/composer.json:/var/web/app/drupal/composer.json
       - ./app/drupal/composer.lock:/var/web/app/drupal/composer.lock
@@ -31,17 +30,14 @@ services:
 #      - ./app/drupal/web/robots.txt:/var/web/app/drupal/web/robots.txt
 #      - ./app/drupal/web/.htaccess:/var/web/app/drupal/web/.htaccess
       # web/sites/default
-#      - ./app/drupal/web/sites/default/default.services.yml:/var/web/app/drupal/web/sites/default/default.services.yml
-#      - ./app/drupal/web/sites/default/default.settings.yml:/var/web/app/drupal/web/sites/default/default.settings.yml
       - ./app/drupal/web/sites/default/settings.php:/var/web/app/drupal/web/sites/default/settings.php
       - ./app/drupal/web/sites/default/settings.local.php:/var/web/app/drupal/web/sites/default/settings.local.php
+#      - ./app/drupal/web/sites/default/default.services.yml:/var/web/app/drupal/web/sites/default/default.services.yml
+#      - ./app/drupal/web/sites/default/default.settings.yml:/var/web/app/drupal/web/sites/default/default.settings.yml
 #      - ./app/drupal/web/sites/development.services.yml:/var/web/app/drupal/web/sites/development.services.yml
-
       # drupal vendor
       - drupal-vendor:/var/web/app/drupal/vendor
-      # drupal files archive
-#      - ./app/drupal/web/sites/default/files/archive:/var/web/app/drupal/web/sites/default/files/archive
-      ## exclude
+      ## exclude files folder
       - /var/web/app/drupal/web/sites/default/files
 
   mysql:

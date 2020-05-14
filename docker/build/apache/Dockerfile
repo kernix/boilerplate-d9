@@ -23,6 +23,7 @@ RUN apt-get update && apt-get install -y \
         libxml2-dev \
         libmcrypt-dev \
         zip libzip-dev unzip \
+        mariadb-client \
     && docker-php-ext-configure gd --with-freetype=/usr/include/ --with-jpeg=/usr/include/ \
     && docker-php-ext-install pdo_mysql gd mbstring bcmath zip intl opcache \
     && docker-php-ext-enable intl opcache
