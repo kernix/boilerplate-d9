@@ -33,19 +33,6 @@ drush sqlc < build/mysql/YOUR_MYSQL_FILE_NAME.sql
 ## Docker config override (optionnel)
 You can override your docker-compose on `docker-compose.override.yml`
 
-## Installation Front-end
-```sh
-PROD:
-# install dependencies (yarn install --production && gulp --production)
-On folder: app/drupal/web/themes/custom/oise_theme/src -> npm run start:prod
-```
-```sh
-DEV:
-# install dependencies (yarn and gulp)
-On folder: app/drupal/web/themes/custom/oise_theme/src -> yarn run start:dev
-```
-For more information, you see the README (app/drupal/web/themes/custom/bcm_core/src/README.md)
-
 Configuration
 -------------
 1. Global settings
@@ -54,7 +41,8 @@ settings file app/drupal/.env
 
 | Parameter        | Description            | Default value |
 | :--------------- |:-----------------------| :-----|
-| MYSQL_DATABASE   | database name          | oise_dev |
+| APP_ENV   | environment name (local, dev, stagging, prod)          | local |
+| MYSQL_DATABASE   | database name          | d9_dev |
 | MYSQL_USER       | database user name     | - |
 | MYSQL_PASSWORD   | database user password | - |
 | MYSQL_HOSTNAME   | database host          | mysql |
