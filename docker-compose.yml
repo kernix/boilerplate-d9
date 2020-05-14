@@ -1,0 +1,66 @@
+version: '3'
+
+services:
+  apache:
+    build: ./docker/build/apache/
+    restart: always
+    depends_on:
+      - mysql
+      - postfix
+    volumes:
+      - ./docker/etc/apache/drupal.conf:/etc/apache2/sites-enabled/000-default.conf:ro
+      - ./docker/etc/php/php.ini:/usr/local/etc/php/php.ini
+      - ./docker/etc/php/php-cli.ini:/usr/local/etc/php/php-cli.ini
+      - ./log/apache/drupal:/var/log/apache2
+      # drupal root
+      - ./app/drupal/build:/var/web/app/drupal/build
+      - ./app/drupal/.env:/var/web/app/drupal/.env
+      - ./app/drupal/load.environment.php:/var/web/app/drupal/load.environment.php
+      # drupal web dir
+      - ./app/drupal/web/modules:/var/web/app/drupal/web/modules
+      - ./app/drupal/web/themes:/var/web/app/drupal/web/themes
+      - ./app/drupal/web/profiles:/var/web/app/drupal/web/profiles
+      - ./app/drupal/web/sites:/var/web/app/drupal/web/sites
+#      - ./app/drupal/web/libraries:/var/web/app/drupal/web/libraries
+      # drupal web files
+      - ./app/drupal/composer.json:/var/web/app/drupal/composer.json
+      - ./app/drupal/composer.lock:/var/web/app/drupal/composer.lock
+#      - ./app/drupal/web/index.php:/var/web/app/drupal/web/index.php
+#      - ./app/drupal/web/autoload.php:/var/web/app/drupal/web/autoload.php
+#      - ./app/drupal/web/update.php:/var/web/app/drupal/web/update.php
+#      - ./app/drupal/web/robots.txt:/var/web/app/drupal/web/robots.txt
+#      - ./app/drupal/web/.htaccess:/var/web/app/drupal/web/.htaccess
+      # web/sites/default
+#      - ./app/drupal/web/sites/default/default.services.yml:/var/web/app/drupal/web/sites/default/default.services.yml
+#      - ./app/drupal/web/sites/default/default.settings.yml:/var/web/app/drupal/web/sites/default/default.settings.yml
+      - ./app/drupal/web/sites/default/settings.php:/var/web/app/drupal/web/sites/default/settings.php
+      - ./app/drupal/web/sites/default/settings.local.php:/var/web/app/drupal/web/sites/default/settings.local.php
+#      - ./app/drupal/web/sites/development.services.yml:/var/web/app/drupal/web/sites/development.services.yml
+
+      # drupal vendor
+      - drupal-vendor:/var/web/app/drupal/vendor
+      # drupal files archive
+#      - ./app/drupal/web/sites/default/files/archive:/var/web/app/drupal/web/sites/default/files/archive
+      ## exclude
+      - /var/web/app/drupal/web/sites/default/files
+
+  mysql:
+    build:
+      context: ./docker/build/mysql
+      dockerfile: Dockerfile
+    volumes:
+      - ./docker/etc/mysql/my.cnf:/etc/mysql/conf.d/my.cnf
+      - data-mysql:/var/lib/mysql
+    restart: always
+
+  phpmyadmin:
+    image: nazarpc/phpmyadmin
+    depends_on:
+      - mysql
+
+  postfix:
+    image: catatnight/postfix
+
+volumes:
+  drupal-vendor:
+  data-mysql:
